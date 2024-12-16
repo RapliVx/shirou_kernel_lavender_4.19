@@ -544,8 +544,8 @@ static void dequeue_rt_entity(struct sched_rt_entity *rt_se, unsigned int flags)
 
 static void sched_rt_rq_enqueue(struct rt_rq *rt_rq)
 {
+	struct task_struct *curr = rq_of_rt_rq(rt_rq)->curr;
 	struct rq *rq = rq_of_rt_rq(rt_rq);
-	struct task_struct *curr = rq->curr;
 	struct sched_rt_entity *rt_se;
 
 	int cpu = cpu_of(rq);
@@ -2740,6 +2740,7 @@ static unsigned int get_rr_interval_rt(struct rq *rq, struct task_struct *task)
 		return 0;
 }
 
+#include "cass_rt.h"
 const struct sched_class rt_sched_class = {
 	.next			= &fair_sched_class,
 	.enqueue_task		= enqueue_task_rt,
